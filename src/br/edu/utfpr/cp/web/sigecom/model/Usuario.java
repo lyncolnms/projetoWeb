@@ -1,4 +1,4 @@
-package br.edu.utfpr.cp.web.sicogem.model;
+package br.edu.utfpr.cp.web.sigecom.model;
 
 import java.io.Serializable;
 import java.lang.Long;
