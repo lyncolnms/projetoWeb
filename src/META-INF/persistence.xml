@@ -6,6 +6,7 @@
 	<persistence-unit name="projetoWeb">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/projetoWeb</jta-data-source>
+
 		<class>br.edu.utfpr.cp.web.sicogem.model.Usuario</class>
 
 		<properties>
