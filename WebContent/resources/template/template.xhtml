@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><ui:insert name="pageTitle">Sistema Gerenciador e Controlador de
+				Maquinários</ui:insert></title>
+</h:head>
+<h:body>
+	<h:outputStylesheet library="css" name="style.css" />
+
+	<p:layout fullPage="true">
+
+		<p:layoutUnit position="north" size="90" style="border: none">
+			<div class="logo">
+				<!-- 				<h:graphicImage url="/resources/img/cnpso.png" /> -->
+			</div>
+			<div class="textoTopo">Sistema Gerenciador e Controlador de
+				Maquinários - SiGeCoM</div>
+		</p:layoutUnit>
+
+
+		<p:layoutUnit position="south" size="50" style="border:none;">
+			<div class="textoRodape">
+				<p>
+					Empresa Brasileira de Pesquisa Agropecuária - Embrapa Todos os
+					direitos reservados, conforme Lei n° 9.610.<br /> Embrapa Soja
+					Rod. Carlos João Strass - Distrito de Warta Telefone (43) 3371 6000
+					- Fax (43) 3371 6100 Caixa Postal 231 - CEP 86001-970 Londrina-
+					Paraná- Brasil
+				</p>
+			</div>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center" style="border:none;">
+			<ui:insert name="menu">
+				<ui:include src="/resources/template/menu.xhtml" />
+			</ui:insert>
+			<ui:insert name="content">
+				<h:form>  
+	            This fullPage layout consists of five different layoutUnits which are resizable and closable by default.  
+	  
+	        </h:form>
+			</ui:insert>
+		</p:layoutUnit>
+
+	</p:layout>
+
+</h:body>
+
+</html>
