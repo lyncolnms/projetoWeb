@@ -39,13 +39,11 @@
 					</p:outputPanel>
 				</f:facet>
 
-				<!-- 				<p:ajax event="rowEdit" listener="#{usuarioBean.onRowEdit}" -->
-				<!-- 					update=":cadastro:msgs" /> -->
-				<!-- 				<p:ajax event="rowEditCancel" listener="#{usuarioBean.onRowCancel}" -->
-				<!-- 					update=":cadastro:msgs" /> -->
+				<p:ajax event="rowEdit" listener="#{usuarioBean.onRowEdit}"
+					update=":cadastro:msgs" />
 
-				<!-- 				<p:ajax event="" listener="#{usuarioBean.onRowDelete}" -->
-				<!-- 					update=":cadastro:msgs" /> -->
+				<p:ajax event="rowEditCancel" listener="#{usuarioBean.onRowCancel}"
+					update=":cadastro:msgs" />
 
 				<p:column filterBy="#{usuario.login}" filterStyle="display: none;"
 					headerText="Login" sortBy="#{usuario.login}">
@@ -93,8 +91,9 @@
 			message="Deseja realmente excluir o usuário selecionado ?"
 			severity="alert">
 			<h:form>
-				<p:focus for="cancelar" />
+
 				<p:commandButton value="Sim"
+					actionListener="#{usuarioBean.removeMessage()}"
 					action="#{usuarioBean.excluir(usuarioBean.usuario)}"
 					onclick="@dlgRemove.hide()" update="@this :cadastro" />
 
