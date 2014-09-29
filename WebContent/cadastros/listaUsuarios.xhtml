@@ -47,11 +47,6 @@
 				<!-- 				<p:ajax event="" listener="#{usuarioBean.onRowDelete}" -->
 				<!-- 					update=":cadastro:msgs" /> -->
 
-				<p:column filterBy="#{usuario.id}" filterStyle="display: none;"
-					headerText="ID" sortBy="#{usuario.id}">
-					<p:outputLabel value="#{usuario.id}" />
-				</p:column>
-
 				<p:column filterBy="#{usuario.login}" filterStyle="display: none;"
 					headerText="Login" sortBy="#{usuario.login}">
 					<p:cellEditor>
@@ -92,6 +87,7 @@
 			</p:dataTable>
 		</h:form>
 
+		<!-- Diálogo para exclusão -->
 		<p:confirmDialog id="dlgRemove" header="Excluir Usuário"
 			widgetVar="dlgRemove" appendTo="@(body)"
 			message="Deseja realmente excluir o usuário selecionado ?"
@@ -109,7 +105,6 @@
 		</p:confirmDialog>
 
 		<!-- Janela para inserção de novo usuário -->
-
 		<p:dialog id="dlgNewUser" header="Adicionando Usuário"
 			widgetVar="dlgNewUser" modal="true" resizable="false"
 			appendTo="@(body)" draggable="false" styleClass="semBorda">
@@ -129,8 +124,8 @@
 						match="senha2" required="true" />
 
 					<h:outputLabel for="senha2" value="Confirme a senha: " />
-					<p:password id="senha2" label="senha2" value="#{usuarioBean.usuario.senha}"
-						required="true" />
+					<p:password id="senha2" label="senha2"
+						value="#{usuarioBean.usuario.senha}" required="true" />
 
 				</p:panelGrid>
 

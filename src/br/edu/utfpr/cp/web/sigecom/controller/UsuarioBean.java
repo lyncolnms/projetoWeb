@@ -75,7 +75,7 @@ public class UsuarioBean {
 	public void excluir(Usuario usr) {
 
 		try {
-			Usuario usuario = this.em.find(Usuario.class, usr.getId());
+			Usuario usuario = this.em.find(Usuario.class, usr.getLogin());
 			this.em.remove(usuario);
 			this.em.flush();
 		} catch (Exception e) {

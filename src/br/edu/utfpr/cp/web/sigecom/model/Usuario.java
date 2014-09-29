@@ -1,34 +1,21 @@
 package br.edu.utfpr.cp.web.sigecom.model;
 
 import java.io.Serializable;
-import java.lang.Long;
 import java.lang.String;
 
 import javax.persistence.*;
 
 @Entity
-@SequenceGenerator(name = "seqID", sequenceName = "seqID")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(generator = "seqID", strategy = GenerationType.SEQUENCE)
-	private Long id;
-
 	private String login;
 
 	private String senha;
 
 	private String nomeCompleto;
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getLogin() {
 		return this.login;
@@ -58,7 +45,6 @@ public class Usuario implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result
 				+ ((nomeCompleto == null) ? 0 : nomeCompleto.hashCode());
@@ -75,11 +61,6 @@ public class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (login == null) {
 			if (other.login != null)
 				return false;
