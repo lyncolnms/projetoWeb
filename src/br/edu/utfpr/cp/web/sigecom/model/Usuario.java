@@ -7,11 +7,13 @@ import java.lang.String;
 import javax.persistence.*;
 
 @Entity
+@SequenceGenerator(name = "seqID", sequenceName = "seqID")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(generator = "seqID", strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	private String login;

@@ -9,6 +9,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import br.edu.utfpr.cp.web.sigecom.model.Usuario;
 
@@ -24,9 +25,13 @@ public class UsuarioBean {
 	@PersistenceContext
 	EntityManager em;
 
+	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void init() {
-		this.em.createQuery("FROM u ORDER BY u.login");
+		this.usuario = new Usuario();
+		Query query = em
+				.createQuery("SELECT u FROM Usuario u ORDER BY u.login");
+		this.listaUsuarios = query.getResultList();
 
 	}
 
@@ -54,19 +59,29 @@ public class UsuarioBean {
 		this.listaUsuarios = listaUsuarios;
 	}
 
-	public void salvar(Usuario usuario) {
-		Usuario usr = this.em.find(Usuario.class, usuario.getId());
-		this.em.persist(usr);
-		this.em.flush();
-		this.init();
+	public void salvar(Usuario usr) {
+
+		try {
+			this.em.persist(usr);
+			this.em.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.init();
+		}
 
 	}
 
-	public void remover(Usuario usuario) {
-		Usuario usr = this.em.find(Usuario.class, usuario.getId());
-		this.em.remove(usr);
-		this.em.flush();
+	public void excluir(Usuario usr) {
 
+		try {
+			Usuario usuario = this.em.find(Usuario.class, usr.getId());
+			this.em.remove(usuario);
+			this.em.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.init();
+		}
 	}
-
 }

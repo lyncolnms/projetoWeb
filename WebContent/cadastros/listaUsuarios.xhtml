@@ -99,7 +99,7 @@
 			<h:form>
 				<p:focus for="cancelar" />
 				<p:commandButton value="Sim"
-					action="#{usuarioBean.remover(usuarioBean.usuario)}"
+					action="#{usuarioBean.excluir(usuarioBean.usuario)}"
 					onclick="@dlgRemove.hide()" update="@this :cadastro" />
 
 				<p:commandButton id="cancelar" value="Cancelar" onclick="@dlgRemove"
@@ -115,6 +115,7 @@
 			appendTo="@(body)" draggable="false" styleClass="semBorda">
 			<h:form>
 				<p:panelGrid columns="2">
+
 					<p:outputLabel for="login" value="Login: " />
 					<p:inputText id="login" required="true"
 						value="#{usuarioBean.usuario.login}" />
@@ -128,7 +129,7 @@
 						match="senha2" required="true" />
 
 					<h:outputLabel for="senha2" value="Confirme a senha: " />
-					<p:password id="senha2" value="#{usuarioBean.usuario.senha}"
+					<p:password id="senha2" label="senha2" value="#{usuarioBean.usuario.senha}"
 						required="true" />
 
 				</p:panelGrid>
