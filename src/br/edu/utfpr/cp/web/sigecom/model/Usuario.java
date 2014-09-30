@@ -16,7 +16,7 @@ public class Usuario implements Serializable {
 	private String senha;
 
 	private String nomeCompleto;
-
+	
 	public String getLogin() {
 		return this.login;
 	}
