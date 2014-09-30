@@ -5,11 +5,15 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.primefaces.event.RowEditEvent;
 
 import br.edu.utfpr.cp.web.sigecom.model.Usuario;
 
@@ -83,5 +87,34 @@ public class UsuarioBean {
 		} finally {
 			this.init();
 		}
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+
+		this.usuario = (Usuario) event.getObject();
+
+		FacesMessage msg = new FacesMessage("Usuario Editado",
+				usuario.getLogin());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+
+		// Faz alteração no usuário da linha selecionada
+		try {
+			em.merge(usuario);
+			em.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Usuario Cancelado",
+				((Usuario) event.getObject()).getLogin());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void removeMessage() {
+		FacesMessage msg = new FacesMessage("Usuário Removido",
+				usuario.getLogin());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 }
