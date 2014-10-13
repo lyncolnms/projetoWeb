@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/template.xhtml">
+	<ui:define name="pageTitle">Cadastro de Equipamentos</ui:define>
+
+	<ui:define name="content">
+		<p:spacer height="10px" />
+		<h:form>
+			<h:panelGrid columns="1" cellpadding="5">
+				<p:commandButton id="newEquipamento" value="Novo Equipamento" type="button"
+					onclick="PF('dlgNewEquipamento').show(); " />
+			</h:panelGrid>
+		</h:form>
+
+		<p:spacer height="10px" />
+		
+		<!-- Tabela com lista de Equipamentos cadastrados no sistema -->
+		<h:form id="cadastro">
+			<p:growl id="msgs" showDetail="true" />
+
+			<p:dataTable id="listaEquipamentos" var="equipamentos"
+				widgetVar="tabelaEquipamentos" editable="true" paginator="true"
+				paginatorPosition="bottom" rowsPerPageTemplate="10,15,20" rows="10"
+				resizableColumns="true" value="#{equipamentoBean.listaEquipamentos}"
+				style="margin-bottom: 10px" rowKey="#{equipamentos.nome}"
+				emptyMessage="Nada encontrado!!"
+				filteredValue="#{equipamentoBean.filtroEquipamentos}">
+
+				<f:facet name="header">Equipamentos Cadastrados</f:facet>
+				<f:facet name="header">
+					<p:outputPanel style="align: right">
+						<h:outputText value="Buscar: " />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('tabelaEquipamentos').filter()" style="width: 150px"
+							placeholder="pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{equipamentoBean.onRowEdit}"
+					update=":cadastro:msgs" />
+
+				<p:ajax event="rowEditCancel" listener="#{equipamentoBean.onRowCancel}"
+					update=":cadastro:msgs" />
+
+				<p:column filterBy="#{equipamentos.nome}" filterStyle="display: none;"
+					headerText="Nome" sortBy="#{equipamentos.nome}">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText id="nome" value="#{equipamentos.nome}" />
+						</f:facet>
+						<f:facet name="output">
+							<p:outputLabel value="#{equipamentos.nome}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+<!-- 				<p:column filterBy="#{usuario.nomeCompleto}" -->
+<!-- 					filterStyle="display: none;" headerText="Nome Completo" -->
+<!-- 					sortBy="#{usuario.nomeCompleto}"> -->
+<!-- 					<p:cellEditor> -->
+<!-- 						<f:facet name="input"> -->
+<!-- 							<p:inputText id="nomeCompleto" value="#{usuario.nomeCompleto}" /> -->
+<!-- 						</f:facet> -->
+<!-- 						<f:facet name="output"> -->
+<!-- 							<p:outputLabel value="#{usuario.nomeCompleto}" /> -->
+<!-- 						</f:facet> -->
+<!-- 					</p:cellEditor> -->
+<!-- 				</p:column> -->
+
+				<p:column headerText="Alterar"
+					style="width:42px; text-align: center">
+					<p:rowEditor />
+				</p:column>
+				<p:column headerText="Excluir"
+					style="width: 40px; text-align: center">
+					<p:commandButton onclick="PF('dlgRemove').show()"
+						icon="ui-icon-trash" title="Excluir">
+						<f:setPropertyActionListener target="#{equipamentoBean.equipamentos}"
+							value="#{equipamentos}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<!-- Diálogo para exclusão -->
+		<p:confirmDialog id="dlgRemove" header="Excluir Equipamento"
+			widgetVar="dlgRemove" appendTo="@(body)"
+			message="Deseja realmente excluir o equipamento selecionado ?"
+			severity="alert">
+			<h:form>
+
+				<p:commandButton value="Sim"
+					actionListener="#{equipamentoBean.removeMessage()}"
+					action="#{equipamentoBean.excluir(equipamentoBean.equipamentos)}"
+					onclick="@dlgRemove.hide()" update="@this :cadastro" />
+
+				<p:commandButton id="cancelar" value="Cancelar" onclick="@dlgRemove"
+					update="@this :cadastro" />
+
+			</h:form>
+		</p:confirmDialog>
+
+		<!-- Janela para inserção de novo equipamento -->
+		<p:dialog id="dlgNewEquipamento" header="Adicionando Equipamento"
+			widgetVar="dlgNewEquipamento" modal="true" resizable="false"
+			appendTo="@(body)" draggable="false" styleClass="semBorda">
+			<h:form>
+				<p:panelGrid columns="2">
+
+					<p:outputLabel for="nome" value="Nome: " />
+					<p:inputText id="nome" required="true"
+						value="#{equipamentoBean.equipamentos.nome}" />
+
+<!-- 					<p:outputLabel for="nomeCompleto" value="Nome Completo: " /> -->
+<!-- 					<p:inputText id="nomeCompleto" required="true" -->
+<!-- 						value="#{usuarioBean.usuario.nomeCompleto}" /> -->
+
+<!-- 					<p:outputLabel for="senha" value="Senha: " /> -->
+<!-- 					<p:password id="senha" value="#{usuarioBean.usuario.senha}" -->
+<!-- 						match="senha2" required="true" /> -->
+
+<!-- 					<h:outputLabel for="senha2" value="Confirme a senha: " /> -->
+<!-- 					<p:password id="senha2" label="senha2" -->
+<!-- 						value="#{usuarioBean.usuario.senha}" required="true" /> -->
+
+				</p:panelGrid>
+
+				<p:commandButton action="#{equipamentoBean.salvar(equipamentoBean.equipamentos)}"
+					value="Salvar" icon="ui-icon-check"
+					oncomplete="PF('dlgNewEquipamento').show()" update="@form @this :cadastro" />
+				<p:spacer width="5px" />
+				<p:commandButton value="Salvar e Fechar" icon="ui-icon-close"
+					onclick="@dlgNewUser"
+					action="#{equipamentoBean.salvar(equipamentoBean.equipamentos)}"
+					update="@form @this :cadastro" />
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>
