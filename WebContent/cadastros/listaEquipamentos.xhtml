@@ -58,19 +58,6 @@
 					</p:cellEditor>
 				</p:column>
 
-<!-- 				<p:column filterBy="#{usuario.nomeCompleto}" -->
-<!-- 					filterStyle="display: none;" headerText="Nome Completo" -->
-<!-- 					sortBy="#{usuario.nomeCompleto}"> -->
-<!-- 					<p:cellEditor> -->
-<!-- 						<f:facet name="input"> -->
-<!-- 							<p:inputText id="nomeCompleto" value="#{usuario.nomeCompleto}" /> -->
-<!-- 						</f:facet> -->
-<!-- 						<f:facet name="output"> -->
-<!-- 							<p:outputLabel value="#{usuario.nomeCompleto}" /> -->
-<!-- 						</f:facet> -->
-<!-- 					</p:cellEditor> -->
-<!-- 				</p:column> -->
-
 				<p:column headerText="Alterar"
 					style="width:42px; text-align: center">
 					<p:rowEditor />
@@ -114,18 +101,6 @@
 					<p:outputLabel for="nome" value="Nome: " />
 					<p:inputText id="nome" required="true"
 						value="#{equipamentoBean.equipamentos.nome}" />
-
-<!-- 					<p:outputLabel for="nomeCompleto" value="Nome Completo: " /> -->
-<!-- 					<p:inputText id="nomeCompleto" required="true" -->
-<!-- 						value="#{usuarioBean.usuario.nomeCompleto}" /> -->
-
-<!-- 					<p:outputLabel for="senha" value="Senha: " /> -->
-<!-- 					<p:password id="senha" value="#{usuarioBean.usuario.senha}" -->
-<!-- 						match="senha2" required="true" /> -->
-
-<!-- 					<h:outputLabel for="senha2" value="Confirme a senha: " /> -->
-<!-- 					<p:password id="senha2" label="senha2" -->
-<!-- 						value="#{usuarioBean.usuario.senha}" required="true" /> -->
 
 				</p:panelGrid>
 
