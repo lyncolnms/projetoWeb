@@ -7,13 +7,15 @@ import java.lang.String;
 import javax.persistence.*;
 
 @Entity
+@SequenceGenerator(name = "seqIDEq", sequenceName = "seqIDEq")
 public class Equipamento implements Serializable {
 
-	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqIDEq")
 	private Long id;
-	
+
 	private String nome;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public Long getId() {
@@ -22,7 +24,8 @@ public class Equipamento implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}   
+	}
+
 	public String getNome() {
 		return this.nome;
 	}
@@ -61,7 +64,5 @@ public class Equipamento implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-   
+
 }

@@ -11,13 +11,13 @@
 		<p:spacer height="10px" />
 		<h:form>
 			<h:panelGrid columns="1" cellpadding="5">
-				<p:commandButton id="newEquipamento" value="Novo Equipamento" type="button"
-					onclick="PF('dlgNewEquipamento').show(); " />
+				<p:commandButton id="newEquipamento" value="Novo Equipamento"
+					type="button" onclick="PF('dlgNewEquipamento').show(); " />
 			</h:panelGrid>
 		</h:form>
 
 		<p:spacer height="10px" />
-		
+
 		<!-- Tabela com lista de Equipamentos cadastrados no sistema -->
 		<h:form id="cadastro">
 			<p:growl id="msgs" showDetail="true" />
@@ -43,11 +43,12 @@
 				<p:ajax event="rowEdit" listener="#{equipamentoBean.onRowEdit}"
 					update=":cadastro:msgs" />
 
-				<p:ajax event="rowEditCancel" listener="#{equipamentoBean.onRowCancel}"
-					update=":cadastro:msgs" />
+				<p:ajax event="rowEditCancel"
+					listener="#{equipamentoBean.onRowCancel}" update=":cadastro:msgs" />
 
-				<p:column filterBy="#{equipamentos.nome}" filterStyle="display: none;"
-					headerText="Nome" sortBy="#{equipamentos.nome}">
+				<p:column filterBy="#{equipamentos.nome}"
+					filterStyle="display: none;" headerText="Nome"
+					sortBy="#{equipamentos.nome}">
 					<p:cellEditor>
 						<f:facet name="input">
 							<p:inputText id="nome" value="#{equipamentos.nome}" />
@@ -66,8 +67,8 @@
 					style="width: 40px; text-align: center">
 					<p:commandButton onclick="PF('dlgRemove').show()"
 						icon="ui-icon-trash" title="Excluir">
-						<f:setPropertyActionListener target="#{equipamentoBean.equipamentos}"
-							value="#{equipamentos}" />
+						<f:setPropertyActionListener
+							target="#{equipamentoBean.equipamentos}" value="#{equipamentos}" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
@@ -104,12 +105,14 @@
 
 				</p:panelGrid>
 
-				<p:commandButton action="#{equipamentoBean.salvar(equipamentoBean.equipamentos)}"
+				<p:commandButton
+					action="#{equipamentoBean.salvar(equipamentoBean.equipamentos)}"
 					value="Salvar" icon="ui-icon-check"
-					oncomplete="PF('dlgNewEquipamento').show()" update="@form @this :cadastro" />
+					oncomplete="PF('dlgNewEquipamento').show()"
+					update="@form @this :cadastro" />
 				<p:spacer width="5px" />
 				<p:commandButton value="Salvar e Fechar" icon="ui-icon-close"
-					onclick="@dlgNewUser"
+					onclick="@dlgNewEquipamento"
 					action="#{equipamentoBean.salvar(equipamentoBean.equipamentos)}"
 					update="@form @this :cadastro" />
 			</h:form>

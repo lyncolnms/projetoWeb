@@ -1,0 +1,155 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/template.xhtml">
+	<ui:define name="pageTitle">Cadastro de Operador</ui:define>
+
+	<ui:define name="content">
+		<p:spacer height="10px" />
+		<h:form>
+			<h:panelGrid columns="1" cellpadding="5">
+				<p:commandButton id="newOperador" value="Novo Operador"
+					type="button" onclick="PF('dlgNewOperador').show(); " />
+			</h:panelGrid>
+		</h:form>
+
+		<p:spacer height="10px" />
+
+		<!-- Tabela com lista de operadores cadastrados no sistema -->
+		<h:form id="cadastro">
+			<p:growl id="msgs" showDetail="true" />
+
+			<p:dataTable id="listaOperador" var="operador"
+				widgetVar="tabelaOperador" editable="true" paginator="true"
+				paginatorPosition="bottom" rowsPerPageTemplate="10,15,20" rows="10"
+				resizableColumns="true" value="#{operadorBean.listaOperadores}"
+				style="margin-bottom: 10px" rowKey="#{operador.nome}"
+				emptyMessage="Nada encontrado!!"
+				filteredValue="#{OperadorBean.filtroOperadores}">
+
+				<f:facet name="header">Operadores Cadastrados</f:facet>
+				<f:facet name="header">
+					<p:outputPanel style="align: right">
+						<h:outputText value="Buscar: " />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('tabelaOperador').filter()" style="width: 150px"
+							placeholder="pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{operadorBean.onRowEdit}"
+					update=":cadastro:msgs" />
+
+				<p:ajax event="rowEditCancel" listener="#{operadorBean.onRowCancel}"
+					update=":cadastro:msgs" />
+
+				<p:column filterBy="#{operador.nome}" filterStyle="display: none;"
+					headerText="Nome" sortBy="#{operador.nome}">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText id="nome" value="#{operador.nome}" />
+						</f:facet>
+						<f:facet name="output">
+							<p:outputLabel value="#{operador.nome}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{operador.funcao}" filterStyle="display: none;"
+					headerText="Função" sortBy="#{operador.funcao}">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText id="funcao" value="#{operador.funcao}" />
+						</f:facet>
+						<f:facet name="output">
+							<p:outputLabel value="#{operador.funcao}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{operador.setor}" filterStyle="display: none;"
+					headerText="Setor" sortBy="#{operador.setor}">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText id="setor" value="#{operador.setor}" />
+						</f:facet>
+						<f:facet name="output">
+							<p:outputLabel value="#{operador.setor}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Alterar"
+					style="width:42px; text-align: center">
+					<p:rowEditor />
+				</p:column>
+				<p:column headerText="Excluir"
+					style="width: 40px; text-align: center">
+					<p:commandButton onclick="PF('dlgRemove').show()"
+						icon="ui-icon-trash" title="Excluir">
+						<f:setPropertyActionListener target="#{operadorBean.operador}"
+							value="#{operador}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<!-- Diálogo para exclusão -->
+		<p:confirmDialog id="dlgRemove" header="Excluir Operador"
+			widgetVar="dlgRemove" appendTo="@(body)"
+			message="Deseja realmente excluir o operador selecionado ?"
+			severity="alert">
+			<h:form>
+
+				<p:commandButton value="Sim"
+					actionListener="#{operadorBean.removeMessage()}"
+					action="#{operadorBean.excluir(operadorBean.operador)}"
+					onclick="@dlgRemove.hide()" update="@this :cadastro" />
+
+				<p:commandButton id="cancelar" value="Cancelar" onclick="@dlgRemove"
+					update="@this :cadastro" />
+
+			</h:form>
+		</p:confirmDialog>
+
+		<!-- Janela para inserção de novo operador -->
+		<p:dialog id="dlgNewOperador" header="Adicionando Operador"
+			widgetVar="dlgNewOperador" modal="true" resizable="false"
+			appendTo="@(body)" draggable="false" styleClass="semBorda">
+			<h:form>
+				<p:panelGrid columns="2">
+
+					<p:outputLabel for="nome" value="Nome: " />
+					<p:inputText id="nome" required="true"
+						value="#{operadorBean.operador.nome}" />
+
+					<p:outputLabel for="funcao" value="Função: " />
+					<p:inputText id="funcao" required="true"
+						value="#{operadorBean.operador.funcao}" />
+
+					<p:outputLabel for="setor" value="Setor: " />
+					<p:inputText id="setor" required="true"
+						value="#{operadorBean.operador.setor}" />
+
+				</p:panelGrid>
+
+				<p:commandButton
+					action="#{operadorBean.salvar(operadorBean.operador)}"
+					value="Salvar" icon="ui-icon-check"
+					oncomplete="PF('dlgNewOperador').show()"
+					update="@form @this :cadastro" />
+				<p:spacer width="5px" />
+				<p:commandButton value="Salvar e Fechar" icon="ui-icon-close"
+					onclick="@dlgNewOperador"
+					action="#{operadorBean.salvar(operadorBean.operador)}"
+					update="@form @this :cadastro" />
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

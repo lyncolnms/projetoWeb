@@ -97,7 +97,7 @@ public class EquipamentoBean {
 				equipamentos.getNome());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		// Faz alteração no usuário da linha selecionada
+		// Faz alteração no equipamento da linha selecionada
 		try {
 			em.merge(equipamentos);
 			em.flush();
