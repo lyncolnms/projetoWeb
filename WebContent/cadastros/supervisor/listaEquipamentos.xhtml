@@ -21,6 +21,18 @@
 		<!-- Tabela com lista de Equipamentos cadastrados no sistema -->
 		<h:form id="cadastro">
 			<p:growl id="msgs" showDetail="true" />
+			<p:poll interval="5" process="listaEquipamentos" global="true" />
+
+			<p:ajaxStatus
+				style="display:block; width: 64px; height: 64px; position: fixed; right: 5px; bottom: 5px;">
+				<f:facet name="start">
+					<h:graphicImage library="images" value="/resources/images/"
+						name="carregando3.gif" />
+				</f:facet>
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
 
 			<p:dataTable id="listaEquipamentos" var="equipamentos"
 				widgetVar="tabelaEquipamentos" editable="true" paginator="true"
@@ -41,10 +53,11 @@
 				</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{equipamentoBean.onRowEdit}"
-					update=":cadastro:msgs" />
+					update=":cadastro:msgs" global="true" />
 
 				<p:ajax event="rowEditCancel"
-					listener="#{equipamentoBean.onRowCancel}" update=":cadastro:msgs" />
+					listener="#{equipamentoBean.onRowCancel}" update=":cadastro:msgs"
+					global="true" />
 
 				<p:column filterBy="#{equipamentos.nome}"
 					filterStyle="display: none;" headerText="Nome"
@@ -55,6 +68,45 @@
 						</f:facet>
 						<f:facet name="output">
 							<p:outputLabel value="#{equipamentos.nome}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{equipamentos.tipo}"
+					filterStyle="display: none;" headerText="Tipo"
+					sortBy="#{equipamentos.tipo}">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText id="tipo" value="#{equipamentos.tipo}" />
+						</f:facet>
+						<f:facet name="output">
+							<p:outputLabel value="#{equipamentos.tipo}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{equipamentos.marca}"
+					filterStyle="display: none;" headerText="Marca"
+					sortBy="#{equipamentos.marca}">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText id="marca" value="#{equipamentos.marca}" />
+						</f:facet>
+						<f:facet name="output">
+							<p:outputLabel value="#{equipamentos.marca}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{equipamentos.modelo}"
+					filterStyle="display: none;" headerText="Modelo"
+					sortBy="#{equipamentos.modelo}">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText id="modelo" value="#{equipamentos.modelo}" />
+						</f:facet>
+						<f:facet name="output">
+							<p:outputLabel value="#{equipamentos.modelo}" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -102,6 +154,19 @@
 					<p:outputLabel for="nome" value="Nome: " />
 					<p:inputText id="nome" required="true"
 						value="#{equipamentoBean.equipamentos.nome}" />
+
+					<p:outputLabel for="tipo" value="Tipo: " />
+					<p:inputText id="tipo" required="true"
+						value="#{equipamentoBean.equipamentos. tipo}" />
+
+					<p:outputLabel for="marca" value="Marca: " />
+					<p:inputText id="marca" required="true"
+						value="#{equipamentoBean.equipamentos.marca}" />
+
+					<p:outputLabel for="modelo" value="Modelo: " />
+					<p:inputText id="modelo" required="true"
+						value="#{equipamentoBean.equipamentos.modelo}" />
+
 
 				</p:panelGrid>
 

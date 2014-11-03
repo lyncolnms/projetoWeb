@@ -23,16 +23,15 @@
 
 		<security:authentication-provider>
 
-			<security:jdbc-user-service
-				data-source-ref="dataSource" users-by-username-query="SELECT login, senha FROM usuarios WHERE usuario=?"
-
-				authorities-by-username-query="SELECT ususario, autorizacao FROM usuario WHERE usuario=?" />
+			<security:jdbc-user-service data-source-ref="projetoWeb"
+				users-by-username-query="select username,password, enable from users where username=?"
+				authorities-by-username-query="select username, nome from autorizacao where username =?  " />
 
 		</security:authentication-provider>
 
 	</security:authentication-manager>
 
-	<b:bean id="dataSource"
+	<b:bean id="projetoWeb"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
 		<b:property name="url"

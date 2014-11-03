@@ -21,6 +21,18 @@
 		<!-- Tabela com lista de operadores cadastrados no sistema -->
 		<h:form id="cadastro">
 			<p:growl id="msgs" showDetail="true" />
+			<p:poll interval="5" process="listaOperador" global="true" />
+
+			<p:ajaxStatus
+				style="display:block; width: 64px; height: 64px; position: fixed; right: 5px; bottom: 5px;">
+				<f:facet name="start">
+					<h:graphicImage library="images" value="/resources/images/"
+						name="carregando3.gif" />
+				</f:facet>
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
 
 			<p:dataTable id="listaOperador" var="operador"
 				widgetVar="tabelaOperador" editable="true" paginator="true"
@@ -28,7 +40,7 @@
 				resizableColumns="true" value="#{operadorBean.listaOperadores}"
 				style="margin-bottom: 10px" rowKey="#{operador.nome}"
 				emptyMessage="Nada encontrado!!"
-				filteredValue="#{OperadorBean.filtroOperadores}">
+				filteredValue="#{operadorBean.filtroOperadores}">
 
 				<f:facet name="header">Operadores Cadastrados</f:facet>
 				<f:facet name="header">
@@ -41,10 +53,10 @@
 				</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{operadorBean.onRowEdit}"
-					update=":cadastro:msgs" />
+					update=":cadastro:msgs" global="true" />
 
 				<p:ajax event="rowEditCancel" listener="#{operadorBean.onRowCancel}"
-					update=":cadastro:msgs" />
+					update=":cadastro:msgs" global="true" />
 
 				<p:column filterBy="#{operador.nome}" filterStyle="display: none;"
 					headerText="Nome" sortBy="#{operador.nome}">

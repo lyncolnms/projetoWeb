@@ -79,7 +79,7 @@ public class UsuarioBean {
 	public void excluir(Usuario usr) {
 
 		try {
-			Usuario usuario = this.em.find(Usuario.class, usr.getLogin());
+			Usuario usuario = this.em.find(Usuario.class, usr.getUsername());
 			this.em.remove(usuario);
 			this.em.flush();
 		} catch (Exception e) {
@@ -94,7 +94,7 @@ public class UsuarioBean {
 		this.usuario = (Usuario) event.getObject();
 
 		FacesMessage msg = new FacesMessage("Usuario Editado",
-				usuario.getLogin());
+				usuario.getUsername());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		// Faz alteração no usuário da linha selecionada
@@ -108,13 +108,13 @@ public class UsuarioBean {
 
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Usuario Cancelado",
-				((Usuario) event.getObject()).getLogin());
+				((Usuario) event.getObject()).getUsername());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public void removeMessage() {
 		FacesMessage msg = new FacesMessage("Usuário Removido",
-				usuario.getLogin());
+				usuario.getUsername());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 }
