@@ -60,6 +60,7 @@ public class OperadorBean implements Serializable {
 	}
 
 	public Collection<Operadores> getListaOperadores() {
+		this.init();
 		return listaOperadores;
 	}
 
