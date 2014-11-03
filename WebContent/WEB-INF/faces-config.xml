@@ -2,5 +2,9 @@
 <faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+	<converter>
+		<converter-id>entityConverter</converter-id>
+		<converter-class>br.edu.utfpr.cp.web.sigecom.utils.EntityConverter</converter-class>
+	</converter>
 
 </faces-config>

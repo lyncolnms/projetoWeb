@@ -57,17 +57,12 @@
 				<p:ajax event="rowEditCancel" listener="#{usuarioBean.onRowCancel}"
 					update=":cadastro:msgs" global="true" />
 
-				<p:column filterBy="#{usuario.username}"
-					filterStyle="display: none;" headerText="Login"
-					sortBy="#{usuario.username}">
-					<p:cellEditor>
-						<f:facet name="input">
-							<p:inputText id="login" value="#{usuario.username}" />
-						</f:facet>
-						<f:facet name="output">
-							<p:outputLabel value="#{usuario.username}" />
-						</f:facet>
-					</p:cellEditor>
+				<p:column filterBy="#{usuario.login}" filterStyle="display: none;"
+					headerText="Login" sortBy="#{usuario.login}">
+					<f:facet name="output">
+						<p:outputLabel value="#{usuario.login}" />
+					</f:facet>
+
 				</p:column>
 
 				<p:column filterBy="#{usuario.nomeCompleto}"
@@ -83,34 +78,14 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column filterBy="#{usuario.enable}" filterStyle="display: none;"
-					headerText="Ativo" sortBy="#{usuario.enable}">
-					<p:cellEditor>
-						<f:facet name="output">
-							<p:selectBooleanCheckbox value="#{usuario.enable}"
-								disabled="true" style="width: auto" />
-						</f:facet>
-						<f:facet name="input">
-							<p:selectBooleanCheckbox value="#{usuario.enable}"
-								style="float: center" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-				<p:column filterBy="#{usuario.autorizacao.nome}"
-					filterStyle="display: none;" headerText="Autorização"
-					sortBy="#{usuario.autorizacao.nome}">
+				<p:column filterBy="#{usuario.senha}" filterStyle="display: none;"
+					headerText="Senha" sortBy="#{usuario.senha}">
 					<p:cellEditor>
 						<f:facet name="input">
-							<p:selectOneMenu value="#{usuario.autorizacao}"
-								converter="entityConverter" style="width: 38%">
-								<f:selectItems value="#{autorizacaoBean.listaAutorizacoes()}"
-									var="autorizacao" itemLabel="#{autorizacao.nome}"
-									id="autorizacao" />
-							</p:selectOneMenu>
+							<p:inputText id="senha" value="#{usuario.senha}" />
 						</f:facet>
 						<f:facet name="output">
-							<p:outputLabel value="#{usuario.autorizacao}" />
+							<h:outputLabel value="#{usuario.senha}" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -157,31 +132,19 @@
 
 					<p:outputLabel for="login" value="Login: " />
 					<p:inputText id="login" required="true"
-						value="#{usuarioBean.usuario.username}" />
+						value="#{usuarioBean.usuario.login}" />
 
 					<p:outputLabel for="nomeCompleto" value="Nome Completo: " />
 					<p:inputText id="nomeCompleto" required="true"
 						value="#{usuarioBean.usuario.nomeCompleto}" />
 
 					<p:outputLabel for="senha" value="Senha: " />
-					<p:password id="senha" value="#{usuarioBean.usuario.password}"
+					<p:password id="senha" value="#{usuarioBean.usuario.senha}"
 						match="senha2" required="true" />
 
 					<h:outputLabel for="senha2" value="Confirme a senha: " />
 					<p:password id="senha2" label="senha2"
-						value="#{usuarioBean.usuario.password}" required="true" />
-
-					<p:outputLabel for="autorizacao" value="Autorização: " />
-					<p:selectOneMenu label="autorizacao"
-						value="#{usuarioBean.usuario.autorizacao}"
-						converter="entityConverter" required="true" id="autorizacao">
-						<f:selectItem itemLabel="--Selecione--" noSelectionOption="true" />
-						<f:selectItems value="#{autorizacaoBean.listaAutorizacoes()}"
-							var="autorizacao" itemLabel="#{autorizacao.nome}" />
-					</p:selectOneMenu>
-
-					<p:outputLabel value="Ativo: " />
-					<p:selectBooleanCheckbox value="#{usuarioBean.usuario.enable}" />
+						value="#{usuarioBean.usuario.senha}" required="true" />
 
 				</p:panelGrid>
 
