@@ -1,11 +1,14 @@
 package br.edu.utfpr.cp.web.sigecom.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -21,6 +24,17 @@ public class Operadores implements Serializable {
 	private String nome;
 	private String funcao;
 	private String setor;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Equipamento> equipamento;
+
+	public List<Equipamento> getEquipamento() {
+		return equipamento;
+	}
+
+	public void setEquipamento(List<Equipamento> equipamento) {
+		this.equipamento = equipamento;
+	}
 
 	public int getId() {
 		return id;
@@ -58,6 +72,8 @@ public class Operadores implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((equipamento == null) ? 0 : equipamento.hashCode());
 		result = prime * result + ((funcao == null) ? 0 : funcao.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
@@ -74,6 +90,11 @@ public class Operadores implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Operadores other = (Operadores) obj;
+		if (equipamento == null) {
+			if (other.equipamento != null)
+				return false;
+		} else if (!equipamento.equals(other.equipamento))
+			return false;
 		if (funcao == null) {
 			if (other.funcao != null)
 				return false;

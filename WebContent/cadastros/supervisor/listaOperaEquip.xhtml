@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/template.xhtml">
+	<ui:define name="pageTitle">Cadastro de Equipamentos para Operador</ui:define>
+
+	<ui:define name="content">
+		<p:spacer height="10px" />
+		<h:form>
+
+			<p:contextMenu for="listaOperador">
+				<p:menuitem value="View" update="operadorDetail"
+					icon="ui-icon-search" oncomplete="PF('operadorDialog').show()" />
+			</p:contextMenu>
+
+			<p:dataTable id="listaOperador" var="operador"
+				widgetVar="tabelaOperador" editable="true" paginator="true"
+				paginatorPosition="bottom" rowsPerPageTemplate="10,15,20" rows="10"
+				resizableColumns="true" value="#{operadorBean.listaOperadores}"
+				style="margin-bottom: 10px" rowKey="#{operador.nome}"
+				emptyMessage="Nada encontrado!!"
+				filteredValue="#{operadorBean.filtroOperadores}"
+				selectionMode="single" selection="#{operaEquipBean.operador}">
+
+				<f:facet name="header">Operadores Cadastrados</f:facet>
+				<f:facet name="header">
+					<p:outputPanel style="align: right">
+						<h:outputText value="Buscar: " />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('tabelaOperador').filter()" style="width: 150px"
+							placeholder="pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<!-- 				<p:ajax event="rowEdit" listener="#{operadorBean.onRowEdit}" -->
+				<!-- 					update=":cadastro:msgs" global="true" /> -->
+
+				<!-- 				<p:ajax event="rowEditCancel" listener="#{operadorBean.onRowCancel}" -->
+				<!-- 					update=":cadastro:msgs" global="true" /> -->
+
+				<p:column filterBy="#{operador.nome}" filterStyle="display: none;"
+					headerText="Nome" sortBy="#{operador.nome}">
+					<p:outputLabel value="#{operador.nome}" />
+				</p:column>
+
+				<p:column filterBy="#{operador.funcao}" filterStyle="display: none;"
+					headerText="Função" sortBy="#{operador.funcao}">
+					<p:outputLabel value="#{operador.funcao}" />
+				</p:column>
+
+				<p:column filterBy="#{operador.setor}" filterStyle="display: none;"
+					headerText="Setor" sortBy="#{operador.setor}">
+					<p:outputLabel value="#{operador.setor}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<p:dialog header="Operadores Info" widgetVar="operadorDialog"
+				appendTo="@(body)" modal="true" showEffect="fade" hideEffect="fade"
+				resizable="false">
+				<p:outputPanel id="operadorDetail" style="text-align:center;">
+					<p:panelGrid columns="2" styleClass="semBorda" 
+						rendered="#{not empty operaEquipBean.operador}"
+						columnClasses="label,value">
+
+						<p:outputLabel style="font-weight: bold" value="Id:" />
+						<p:outputLabel value="#{operaEquipBean.operador.id}" />
+
+						<p:outputLabel style="font-weight: bold" value="Nome:" />
+						<p:outputLabel value="#{operaEquipBean.operador.nome}" />
+
+						<p:outputLabel style="font-weight: bold" value="Função:" />
+						<p:outputLabel value="#{operaEquipBean.operador.funcao}" />
+
+						<p:outputLabel style="font-weight: bold" value="Setor:" />
+						<p:outputLabel value="#{operaEquipBean.operador.setor}" />
+
+					</p:panelGrid>
+					<p:dataList value="#{operaEquipBean.operador.equipamento}"
+						var="equip" type="ordered">
+						<f:facet name="header">
+          					  Equipamentos
+       						 </f:facet>
+      					  #{equip.nome}
+   						 </p:dataList>
+				</p:outputPanel>
+			</p:dialog>
+
+
+
+			<!-- 			<p:panelGrid columns="3" styleClass="semBorda"> -->
+
+			<!-- 				<p:selectOneMenu style="width: 130px" id="operador" -->
+			<!-- 					value="#{operadorBean.operador}"> -->
+			<!-- 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" /> -->
+			<!-- 					<f:selectItems value="#{operadorBean.listaOperadores}" -->
+			<!-- 						var="operador" itemLabel="#{operador.nome}" /> -->
+			<!-- 				</p:selectOneMenu> -->
+
+			<!-- 				<p:selectOneMenu style="width: 130px" id="equipamento" -->
+			<!-- 					value="#{equipamentoBean.equipamentos}"> -->
+			<!-- 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" /> -->
+			<!-- 					<f:selectItems value="#{equipamentoBean.listaEquipamentos}" -->
+			<!-- 						var="equipamento" itemLabel="#{equipamento.nome}" /> -->
+			<!-- 				</p:selectOneMenu> -->
+
+			<!-- 				<p:button value="Salvar" onclick="" /> -->
+
+			<!-- 			</p:panelGrid> -->
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

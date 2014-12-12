@@ -3,6 +3,7 @@ package br.edu.utfpr.cp.web.sigecom.model;
 import java.io.Serializable;
 import java.lang.Long;
 import java.lang.String;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -23,6 +24,17 @@ public class Equipamento implements Serializable {
 	private String marca;
 	@Column(length = 10)
 	private String modelo;
+
+	@ManyToMany(mappedBy = "equipamento", fetch = FetchType.EAGER )
+	private List<Operadores> operadores;
+
+	public List<Operadores> getOperadores() {
+		return operadores;
+	}
+
+	public void setOperadores(List<Operadores> operadores) {
+		this.operadores = operadores;
+	}
 
 	public Long getId() {
 		return id;
@@ -72,6 +84,8 @@ public class Equipamento implements Serializable {
 		result = prime * result + ((marca == null) ? 0 : marca.hashCode());
 		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result
+				+ ((operadores == null) ? 0 : operadores.hashCode());
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		return result;
 	}
@@ -104,6 +118,11 @@ public class Equipamento implements Serializable {
 			if (other.nome != null)
 				return false;
 		} else if (!nome.equals(other.nome))
+			return false;
+		if (operadores == null) {
+			if (other.operadores != null)
+				return false;
+		} else if (!operadores.equals(other.operadores))
 			return false;
 		if (tipo == null) {
 			if (other.tipo != null)

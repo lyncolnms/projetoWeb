@@ -7,4 +7,9 @@
 		<converter-class>br.edu.utfpr.cp.web.sigecom.utils.EntityConverter</converter-class>
 	</converter>
 
+	<converter>
+		<converter-id>equipamentoConverter</converter-id>
+		<converter-class>br.edu.utfpr.cp.web.sigecom.utils.EquipamentoConverter</converter-class>
+	</converter>
+
 </faces-config>
