@@ -1,0 +1,192 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/template.xhtml">
+	<ui:define name="pageTitle">Cadastro de Equipamentos para Operador</ui:define>
+
+	<ui:define name="content">
+		<p:spacer height="10px" />
+		<h:form>
+			<h:panelGrid columns="1" cellpadding="5">
+				<p:commandButton id="newOperaEquip" value="Nova Permissão"
+					type="button" onclick="PF('dlgNewOperaEquip').show(); " />
+			</h:panelGrid>
+		</h:form>
+
+		<p:spacer height="10px" />
+
+		<!-- Tabela com lista de operaequip cadastrados no sistema -->
+		<h:form id="cadastro">
+			<p:growl id="msgs" showDetail="true" />
+			<p:poll interval="5" process="listaOperaEquip" global="true" />
+
+			<p:ajaxStatus
+				style="display:block; width: 64px; height: 64px; position: fixed; right: 5px; bottom: 5px;">
+				<f:facet name="start">
+					<h:graphicImage library="images" value="/resources/images/"
+						name="carregando3.gif" />
+				</f:facet>
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
+
+			<p:dataTable id="listaOperaEquip" var="operaequip"
+				widgetVar="tabelaOperaEquip" editable="true" paginator="true"
+				paginatorPosition="bottom" rowsPerPageTemplate="10,15,20" rows="10"
+				resizableColumns="true" value="#{operaEquipBean.listaOperaEquip}"
+				style="margin-bottom: 10px"
+				rowKey="#{manutencao.idEquipamento.nome}"
+				emptyMessage="Nada encontrado!!"
+				filteredValue="#{manutencaoBean.filtroManutencao}">
+
+				<f:facet name="header">Manutenções Cadastrados</f:facet>
+				<f:facet name="header">
+					<p:outputPanel style="align: right">
+						<h:outputText value="Buscar: " />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('tabelaManutencao').filter()" style="width: 150px"
+							placeholder="pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{manutencaoBean.onRowEdit}"
+					update=":cadastro:msgs" global="true" />
+
+				<p:ajax event="rowEditCancel"
+					listener="#{manutencaoBean.onRowCancel}" update=":cadastro:msgs"
+					global="true" />
+
+				<p:column filterBy="#{manutencao.idEquipamento.nome}"
+					filterStyle="display: none;" headerText="Equipamento: "
+					sortBy="#{manutencao.idEquipamento.nome}">
+					<p:outputLabel value="#{manutencao.idEquipamento.nome}" />
+				</p:column>
+
+				<p:column filterBy="#{manutencao.motivo}"
+					filterStyle="display: none;" headerText="Motivo: "
+					sortBy="#{manutencao.motivo}">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText id="motivo" value="#{manutencao.motivo}" />
+						</f:facet>
+						<f:facet name="output">
+							<p:outputLabel value="#{manutencao.motivo}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{manutencao.data}" filterStyle="display: none;"
+					headerText="Data: " sortBy="#{manutencao.data}">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText id="data" value="#{manutencao.data}" />
+						</f:facet>
+						<f:facet name="output">
+							<p:outputLabel value="#{manutencao.data}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{manutencao.proximaRevisao}"
+					filterStyle="display: none;" headerText="Próxima Revisão: "
+					sortBy="#{manutencao.proximaRevisao}">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText id="proximarevisao"
+								value="#{manutencao.proximaRevisao}" />
+						</f:facet>
+						<f:facet name="output">
+							<p:outputLabel value="#{manutencao.proximaRevisao}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Alterar"
+					style="width:42px; text-align: center">
+					<p:rowEditor />
+				</p:column>
+				<p:column headerText="Excluir"
+					style="width: 40px; text-align: center">
+					<p:commandButton onclick="PF('dlgRemove').show()"
+						icon="ui-icon-trash" title="Excluir">
+						<f:setPropertyActionListener target="#{manutencaoBean.manutencao}"
+							value="#{manutencao}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<!-- Diálogo para exclusão -->
+		<p:confirmDialog id="dlgRemove" header="Excluir Manutenção"
+			widgetVar="dlgRemove" appendTo="@(body)"
+			message="Deseja realmente excluir a manutenção para o equipamento selecionado ?"
+			severity="alert">
+			<h:form>
+
+				<p:commandButton value="Sim"
+					actionListener="#{manutencaoBean.removeMessage()}"
+					action="#{manutencaoBean.excluir(manutencaoBean.manutencao)}"
+					onclick="@dlgRemove.hide()" update="@this :cadastro" />
+
+				<p:commandButton id="cancelar" value="Cancelar" onclick="@dlgRemove"
+					update="@this :cadastro" />
+
+			</h:form>
+		</p:confirmDialog>
+
+		<!-- Janela para inserção de novo manutenção -->
+		<p:dialog id="dlgNewManutencao" header="Adicionando Manutenção"
+			widgetVar="dlgNewManutencao" modal="true" resizable="false"
+			appendTo="@(body)" draggable="false" styleClass="semBorda">
+			<h:form>
+				<p:panelGrid columns="2">
+
+					<p:outputLabel for="equipamento" value="Equipamento: " />
+					<p:selectOneMenu label="equipamento"
+						value="#{manutencaoBean.manutencao.idEquipamento}" required="true"
+						id="equipamento">
+						<f:selectItem itemLabel="--Selecione--" noSelectionOption="true" />
+						<f:selectItems value="#{manutencaoBean.listaEquipamento()}"
+							var="equipamento" itemLabel="#{equipamento.nome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="motivo" value="Motivo: " />
+					<p:inputText id="motivo" required="true"
+						value="#{manutencaoBean.manutencao.motivo}" />
+
+					<p:outputLabel for="data" value="Data: " />
+					<p:inputMask mask="99/99/9999" id="data" required="true"
+						value="#{manutencaoBean.manutencao.data}">
+						<f:convertDateTime pattern="dd/mm/yyyy" locale="pt_BR"
+							timeZone="GMT-3" type="date" />
+					</p:inputMask>
+
+					<p:outputLabel for="proximarevisao" value="Próxima Revisão:: " />
+					<p:inputMask mask="99/99/9999" id="proximarevisao" required="true"
+						value="#{manutencaoBean.manutencao.proximaRevisao}">
+						<f:convertDateTime pattern="dd/mm/yyyy" locale="pt_BR"
+							timeZone="GMT-3" type="date" />
+					</p:inputMask>
+				</p:panelGrid>
+
+				<p:commandButton
+					action="#{manutencaoBean.salvar(manutencaoBean.manutencao)}"
+					value="Salvar" icon="ui-icon-check"
+					oncomplete="PF('dlgNewManutencao').show()"
+					update="@form @this :cadastro" />
+				<p:spacer width="5px" />
+				<p:commandButton value="Salvar e Fechar" icon="ui-icon-close"
+					onclick="@dlgNewManutencao"
+					action="#{manutencaoBean.salvar(manutencaoBean.manutencao)}"
+					update="@form @this :cadastro" />
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

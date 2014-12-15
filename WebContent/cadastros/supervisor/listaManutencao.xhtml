@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/template.xhtml">
+	<ui:define name="pageTitle">Cadastro de Manutenções</ui:define>
+
+	<ui:define name="content">
+		<p:spacer height="10px" />
+
+		<!-- Tabela com lista de Manutenções cadastrados no sistema -->
+		<h:form id="cadastro">
+			<p:growl id="msgs" showDetail="true" />
+			<p:poll interval="5" process="listaManutencao" global="true" />
+
+			<p:ajaxStatus
+				style="display:block; width: 64px; height: 64px; position: fixed; right: 5px; bottom: 5px;">
+				<f:facet name="start">
+					<h:graphicImage library="images" value="/resources/images/"
+						name="carregando3.gif" />
+				</f:facet>
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
+
+			<p:contextMenu for="listaManutencao">
+				<p:menuitem value="Ver" update="manutencaoDetail"
+					icon="ui-icon-search" oncomplete="PF('manutencaoDialog').show()" />
+			</p:contextMenu>
+
+			<p:dataTable id="listaManutencao" var="manutencao"
+				widgetVar="tabelaManutencao" editable="true" paginator="true"
+				paginatorPosition="bottom" rowsPerPageTemplate="10,15,20" rows="10"
+				resizableColumns="true" value="#{manutencaoBean.listaManutencao}"
+				style="margin-bottom: 10px" rowKey="#{manutencao.idEquipamento}"
+				emptyMessage="Nada encontrado!!"
+				filteredValue="#{manutencaoBean.filtroManutencao}"
+				selectionMode="single" selection="#{manutencaoBean.manutencao}">
+
+				<f:facet name="header">Manutenções Cadastrados</f:facet>
+				<f:facet name="header">
+					<p:outputPanel style="align: right">
+						<h:outputText value="Buscar: " />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('tabelaManutencao').filter()" style="width: 150px"
+							placeholder="pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column filterBy="#{manutencao.idEquipamento.nome}"
+					filterStyle="display: none;" headerText="Nome"
+					sortBy="#{manutencao.idEquipamento.nome}">
+					<p:outputLabel value="#{manutencao.idEquipamento.nome}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:dialog header="Manutenção Info" widgetVar="manutencaoDialog"
+				appendTo="@(body)" modal="true" showEffect="fade" hideEffect="fade"
+				resizable="false">
+				<p:outputPanel id="manutencaoDetail" style="text-align:center;">
+					<p:panelGrid columns="2" styleClass="semBorda"
+						rendered="#{not empty manutencaoBean.manutencao.idEquipamento.nome}"
+						columnClasses="label,value">
+
+						<p:outputLabel style="font-weight: bold" value="Id: " />
+						<p:outputLabel value="#{manutencaoBean.manutencao.idManutencao}" />
+
+						<p:outputLabel style="font-weight: bold" value="Equipamento: " />
+						<p:outputLabel
+							value="#{manutencaoBean.manutencao.idEquipamento.nome}" />
+
+						<p:outputLabel style="font-weight: bold" value="Motivo: " />
+						<p:outputLabel value="#{manutencaoBean.manutencao.motivo}" />
+
+						<p:outputLabel style="font-weight: bold" value="Data: " />
+						<p:outputLabel value="#{manutencaoBean.manutencao.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+								timeZone="GMT-3" type="date" />
+						</p:outputLabel>
+
+						<p:outputLabel style="font-weight: bold" value="Proxima revisão: " />
+						<p:outputLabel value="#{manutencaoBean.manutencao.proximaRevisao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+								timeZone="GMT-3" type="date" />
+						</p:outputLabel>
+
+					</p:panelGrid>
+					<!-- 					<p:dataList value="#{manutencaoBean.manutencao.idEquipamento}" -->
+					<!-- 						var="equip" type="ordered"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!--           					  Equipamentos -->
+					<!--        						 </f:facet> -->
+					<!--       					  #{equip.nome} -->
+					<!--    						 </p:dataList> -->
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

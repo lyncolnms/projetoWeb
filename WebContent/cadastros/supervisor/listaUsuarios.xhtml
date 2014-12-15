@@ -59,10 +59,7 @@
 
 				<p:column filterBy="#{usuario.login}" filterStyle="display: none;"
 					headerText="Login" sortBy="#{usuario.login}">
-					<f:facet name="output">
-						<p:outputLabel value="#{usuario.login}" />
-					</f:facet>
-
+					<p:outputLabel value="#{usuario.login}" />
 				</p:column>
 
 				<p:column filterBy="#{usuario.nomeCompleto}"

@@ -10,6 +10,7 @@
 		<class>br.edu.utfpr.cp.web.sigecom.model.Operadores</class>
 		<class>br.edu.utfpr.cp.web.sigecom.model.Usuario</class>
 		<class>br.edu.utfpr.cp.web.sigecom.model.Equipamento</class>
+		<class>br.edu.utfpr.cp.web.sigecom.model.Manutencao</class>
 
 		<properties>
 			<!-- Propriedades do hibernate -->

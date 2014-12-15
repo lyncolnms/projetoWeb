@@ -16,17 +16,28 @@ public class Equipamento implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqIDEq")
 	private Long id;
-	@Column(length = 10)
+	@Column(length = 20)
 	private String nome;
-	@Column(length = 10)
+	@Column(length = 20)
 	private String tipo;
-	@Column(length = 10)
+	@Column(length = 20)
 	private String marca;
-	@Column(length = 10)
+	@Column(length = 20)
 	private String modelo;
 
-	@ManyToMany(mappedBy = "equipamento", fetch = FetchType.EAGER )
+	@ManyToMany(mappedBy = "equipamento", fetch = FetchType.EAGER)
 	private List<Operadores> operadores;
+
+	@OneToMany(mappedBy = "idEquipamento")
+	private List<Manutencao> manutencao;
+
+	public List<Manutencao> getManutencao() {
+		return manutencao;
+	}
+
+	public void setManutencao(List<Manutencao> manutencao) {
+		this.manutencao = manutencao;
+	}
 
 	public List<Operadores> getOperadores() {
 		return operadores;
@@ -81,6 +92,8 @@ public class Equipamento implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((manutencao == null) ? 0 : manutencao.hashCode());
 		result = prime * result + ((marca == null) ? 0 : marca.hashCode());
 		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
@@ -103,6 +116,11 @@ public class Equipamento implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (manutencao == null) {
+			if (other.manutencao != null)
+				return false;
+		} else if (!manutencao.equals(other.manutencao))
 			return false;
 		if (marca == null) {
 			if (other.marca != null)
