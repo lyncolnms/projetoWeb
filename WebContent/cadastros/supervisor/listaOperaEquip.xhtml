@@ -98,44 +98,6 @@
 				</p:outputPanel>
 			</p:dialog>
 
-			<!-- Janela para inserção de novo equipamento -->
-			<p:dialog id="dlgNewOperaEquip" header="Adicionando Permissão"
-				widgetVar="dlgNewOperaEquip" modal="true" resizable="false"
-				appendTo="@(body)" draggable="false" styleClass="semBorda">
-				<h:form>
-					<p:panelGrid columns="2">
-
-						<p:outputLabel for="operador" value="Operador: " />
-						<p:selectOneMenu label="operador"
-							value="#{operaEquipBean.operador}" required="true" id="operador">
-							<f:selectItem itemLabel="--Selecione--" noSelectionOption="true" />
-							<f:selectItems value="#{operaEquipBean.listaOperador()}"
-								var="operador" itemLabel="#{operador.nome}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel for="equipamento" value="Equipamento: " />
-						<p:selectOneMenu label="equipamento"
-							value="#{operaEquipBean.equipamento}" required="true"
-							id="equipamento">
-							<f:selectItem itemLabel="--Selecione--" noSelectionOption="true" />
-							<f:selectItems value="#{manutencaoBean.listaEquipamento()}"
-								var="equipamento" itemLabel="#{equipamento.nome}" />
-						</p:selectOneMenu>
-
-						<p:commandButton
-							action="#{operaEquipBean.salvar(operaEquipBean.operador)}"
-							value="Salvar" icon="ui-icon-check"
-							oncomplete="PF('dlgNewOperaEquip').show()"
-							update="@form @this :cadastro" />
-						<p:spacer width="5px" />
-						<p:commandButton value="Salvar e Fechar" icon="ui-icon-close"
-							onclick="@dlgNewOperaEquip"
-							action="#{operaEquipBean.salvar(operaEquipBean.operador)}"
-							update="@form @this :cadastro" />
-					</p:panelGrid>
-				</h:form>
-
-			</p:dialog>
 		</h:form>
 
 	</ui:define>

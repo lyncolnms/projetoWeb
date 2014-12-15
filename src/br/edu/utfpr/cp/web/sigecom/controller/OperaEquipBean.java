@@ -54,18 +54,6 @@ public class OperaEquipBean implements Serializable {
 		return query.getResultList();
 	}
 
-	public void salvar(Operadores opera) {
-		System.out.println("OI");
-		try {
-			em.persist(opera.getId());
-		//	em.persist(equip);
-			em.flush();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	public void remover() {
 
 	}
