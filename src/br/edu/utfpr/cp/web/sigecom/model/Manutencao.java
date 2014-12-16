@@ -24,7 +24,7 @@ public class Manutencao implements Serializable {
 	private int idManutencao;
 
 	@ManyToOne
-	private Equipamento idEquipamento;
+	private Equipamento equipamento;
 
 	@Temporal(TemporalType.DATE)
 	private Date data;
@@ -43,12 +43,12 @@ public class Manutencao implements Serializable {
 		this.idManutencao = idManutencao;
 	}
 
-	public Equipamento getIdEquipamento() {
-		return idEquipamento;
+	public Equipamento getEquipamento() {
+		return equipamento;
 	}
 
-	public void setIdEquipamento(Equipamento idEquipamento) {
-		this.idEquipamento = idEquipamento;
+	public void setEquipamento(Equipamento equipamento) {
+		this.equipamento = equipamento;
 	}
 
 	public Date getData() {
@@ -81,7 +81,7 @@ public class Manutencao implements Serializable {
 		int result = 1;
 		result = prime * result + ((data == null) ? 0 : data.hashCode());
 		result = prime * result
-				+ ((idEquipamento == null) ? 0 : idEquipamento.hashCode());
+				+ ((equipamento == null) ? 0 : equipamento.hashCode());
 		result = prime * result + idManutencao;
 		result = prime * result + ((motivo == null) ? 0 : motivo.hashCode());
 		result = prime * result
@@ -103,10 +103,10 @@ public class Manutencao implements Serializable {
 				return false;
 		} else if (!data.equals(other.data))
 			return false;
-		if (idEquipamento == null) {
-			if (other.idEquipamento != null)
+		if (equipamento == null) {
+			if (other.equipamento != null)
 				return false;
-		} else if (!idEquipamento.equals(other.idEquipamento))
+		} else if (!equipamento.equals(other.equipamento))
 			return false;
 		if (idManutencao != other.idManutencao)
 			return false;

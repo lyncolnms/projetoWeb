@@ -35,7 +35,7 @@
 				widgetVar="tabelaManutencao" editable="true" paginator="true"
 				paginatorPosition="bottom" rowsPerPageTemplate="10,15,20" rows="10"
 				resizableColumns="true" value="#{manutencaoBean.listaManutencao}"
-				style="margin-bottom: 10px" rowKey="#{manutencao.idEquipamento}"
+				style="margin-bottom: 10px" rowKey="#{manutencao.equipamento}"
 				emptyMessage="Nada encontrado!!"
 				filteredValue="#{manutencaoBean.filtroManutencao}"
 				selectionMode="single" selection="#{manutencaoBean.manutencao}">
@@ -50,10 +50,10 @@
 					</p:outputPanel>
 				</f:facet>
 
-				<p:column filterBy="#{manutencao.idEquipamento.nome}"
+				<p:column filterBy="#{manutencao.equipamento.nome}"
 					filterStyle="display: none;" headerText="Nome"
-					sortBy="#{manutencao.idEquipamento.nome}">
-					<p:outputLabel value="#{manutencao.idEquipamento.nome}" />
+					sortBy="#{manutencao.equipamento.nome}">
+					<p:outputLabel value="#{manutencao.equipamento.nome}" />
 				</p:column>
 			</p:dataTable>
 
@@ -62,7 +62,7 @@
 				resizable="false">
 				<p:outputPanel id="manutencaoDetail" style="text-align:center;">
 					<p:panelGrid columns="2" styleClass="semBorda"
-						rendered="#{not empty manutencaoBean.manutencao.idEquipamento.nome}"
+						rendered="#{not empty manutencaoBean.manutencao.equipamento.nome}"
 						columnClasses="label,value">
 
 						<p:outputLabel style="font-weight: bold" value="Id: " />
@@ -70,7 +70,7 @@
 
 						<p:outputLabel style="font-weight: bold" value="Equipamento: " />
 						<p:outputLabel
-							value="#{manutencaoBean.manutencao.idEquipamento.nome}" />
+							value="#{manutencaoBean.manutencao.equipamento.nome}" />
 
 						<p:outputLabel style="font-weight: bold" value="Motivo: " />
 						<p:outputLabel value="#{manutencaoBean.manutencao.motivo}" />
