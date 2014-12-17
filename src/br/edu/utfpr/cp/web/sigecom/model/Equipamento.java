@@ -28,7 +28,7 @@ public class Equipamento implements Serializable {
 	@ManyToMany(mappedBy = "equipamento", fetch = FetchType.EAGER)
 	private List<Operadores> operadores;
 
-	@OneToMany(mappedBy = "idEquipamento")
+	@OneToMany(mappedBy = "equipamento")
 	private List<Manutencao> manutencao;
 
 	public List<Manutencao> getManutencao() {

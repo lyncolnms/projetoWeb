@@ -9,34 +9,32 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import br.edu.utfpr.cp.web.sigecom.model.Equipamento;
+import br.edu.utfpr.cp.web.sigecom.model.Manutencao;
 
 @Named
 @Stateful
-@FacesConverter(forClass = Equipamento.class)
-public class EquipamentoConverter implements Converter {
-
+@FacesConverter(forClass = Manutencao.class)
+public class ManutencaoConverter implements Converter {
+	
 	@PersistenceContext
 	private EntityManager em;
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object object) {
-		Equipamento equipamento = (Equipamento) object;
-		if (equipamento == null || equipamento.getNome() == null)
+		Manutencao manutencao = (Manutencao) object;
+		if (manutencao == null || manutencao.getEquipamento().getId() == null)
 			return null;
-		return String.valueOf(equipamento.getNome());
+		return String.valueOf(manutencao.getEquipamento().getId());
 	}
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String string) {
-		if (string != null && !string.isEmpty()) {
-			Equipamento equipamento = em.find(Equipamento.class, string);
-			return equipamento;
-		}
-
-		return null;
+		if (string == null || string.isEmpty())
+			return null;
+		Manutencao manutencao = em.find(Manutencao.class, string);
+		return manutencao;
 	}
 
 }

@@ -46,7 +46,7 @@ public class ManutencaoBean implements Serializable {
 		listaManutencao = em.createQuery(cQ).getResultList();
 
 	}
-
+	
 	public Equipamento getEquipamento() {
 		return equipamento;
 	}
@@ -87,7 +87,7 @@ public class ManutencaoBean implements Serializable {
 
 	public void salvar(Manutencao manu) {
 
-		System.out.println("OI");
+		System.out.println("->>>>>>OI<<<<<<<<-");
 
 		try {
 			this.em.persist(manu);

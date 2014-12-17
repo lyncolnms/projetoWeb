@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-	<converter>
-		<converter-id>entityConverter</converter-id>
-		<converter-class>br.edu.utfpr.cp.web.sigecom.utils.EntityConverter</converter-class>
-	</converter>
-
-	<converter>
-		<converter-id>equipamentoConverter</converter-id>
-		<converter-class>br.edu.utfpr.cp.web.sigecom.utils.EquipamentoConverter</converter-class>
-	</converter>
-
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+ <converter>
+  <converter-id>equipamentoConverter</converter-id>
+  <converter-class>br.edu.utfpr.cp.web.sigecom.utils.EquipamentoConverter</converter-class>
+ </converter>
+ <converter>
+  <converter-id>manutencaoConverter</converter-id>
+  <converter-class>br.edu.utfpr.cp.web.sigecom.utils.ManutencaoConverter</converter-class>
+ </converter>
+ <application/>
 </faces-config>
