@@ -32,7 +32,7 @@
 				<p:outputLabel for="equipamento" value="Equipamento: " />
 				<p:selectOneMenu label="equipamento"
 					value="#{manutencaoBean.manutencao.equipamento}" required="true"
-					id="equipamento">
+					id="equipamento" >
 					<f:selectItem itemLabel="--Selecione--" noSelectionOption="true" />
 					<f:selectItems value="#{manutencaoBean.listaEquipamento()}"
 						var="equipamento" itemLabel="#{equipamento.nome}" />
@@ -58,9 +58,8 @@
 			</p:panelGrid>
 
 			<p:commandButton
-				action="#{manutencaoBean.salvar(manutencaoBean.manutencao)}"
-				value="Salvar" icon="ui-icon-check" oncomplete=""
-				update="@form @this :cadastro" />
+				actionListener="#{manutencaoBean.salvar(manutencaoBean.manutencao)}"
+				value="Salvar" icon="ui-icon-check" update="@form @this :cadastro" />
 			<p:spacer width="5px" />
 		</h:form>
 

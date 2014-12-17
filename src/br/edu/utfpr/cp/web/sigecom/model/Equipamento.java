@@ -3,6 +3,7 @@ package br.edu.utfpr.cp.web.sigecom.model;
 import java.io.Serializable;
 import java.lang.Long;
 import java.lang.String;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.*;
@@ -28,16 +29,16 @@ public class Equipamento implements Serializable {
 	@ManyToMany(mappedBy = "equipamento", fetch = FetchType.EAGER)
 	private List<Operadores> operadores;
 
-	@OneToMany(mappedBy = "equipamento")
-	private List<Manutencao> manutencao;
+	// @OneToMany(mappedBy = "equipamento", fetch = FetchType.EAGER)
+	// private List<Manutencao> manutencao;
 
-	public List<Manutencao> getManutencao() {
-		return manutencao;
-	}
-
-	public void setManutencao(List<Manutencao> manutencao) {
-		this.manutencao = manutencao;
-	}
+	// public Collection<Manutencao> getManutencao() {
+	// return manutencao;
+	// }
+	//
+	// public void setManutencao(List<Manutencao> manutencao) {
+	// this.manutencao = manutencao;
+	// }
 
 	public List<Operadores> getOperadores() {
 		return operadores;
@@ -92,8 +93,6 @@ public class Equipamento implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((manutencao == null) ? 0 : manutencao.hashCode());
 		result = prime * result + ((marca == null) ? 0 : marca.hashCode());
 		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
@@ -116,11 +115,6 @@ public class Equipamento implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (manutencao == null) {
-			if (other.manutencao != null)
-				return false;
-		} else if (!manutencao.equals(other.manutencao))
 			return false;
 		if (marca == null) {
 			if (other.marca != null)

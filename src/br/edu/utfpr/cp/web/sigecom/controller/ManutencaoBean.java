@@ -34,6 +34,24 @@ public class ManutencaoBean implements Serializable {
 	private List<Manutencao> filtroManutencao;
 	private Collection<Manutencao> listaManutencao;
 	private Equipamento equipamento;
+	private List<Manutencao> manutencoes;
+	private List<Equipamento> equipamentos;
+
+	public List<Manutencao> getManutencoes() {
+		return manutencoes;
+	}
+
+	public void setManutencoes(List<Manutencao> manutencoes) {
+		this.manutencoes = manutencoes;
+	}
+
+	public List<Equipamento> getEquipamentos() {
+		return equipamentos;
+	}
+
+	public void setEquipamentos(List<Equipamento> equipamentos) {
+		this.equipamentos = equipamentos;
+	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@PostConstruct
@@ -46,7 +64,7 @@ public class ManutencaoBean implements Serializable {
 		listaManutencao = em.createQuery(cQ).getResultList();
 
 	}
-	
+
 	public Equipamento getEquipamento() {
 		return equipamento;
 	}
